@@ -37,14 +37,13 @@ class IndexView(BaseMixin, TemplateView):
 class RecipeCreateView(BaseMixin, CreateView):
     template_name = 'main/recipe.html'
     model = Recipe
-    fields = ['title_text', 'ingredients_list', 'body_text']
-
     def get_initial(self):
         if 'from' in self.request.GET:
             return model_to_dict(Recipe.objects.get(id=self.request.GET['from']), fields=self.fields)
         else:
             return self.initial
 
+    fields = ['title_text', 'ingredients_list', 'body_text', 'picture']
     success_url = reverse_lazy('recipe_list')
 
     def form_valid(self, form):
